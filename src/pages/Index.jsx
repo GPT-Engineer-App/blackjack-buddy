@@ -203,6 +203,12 @@ const Index = () => {
       <Heading as="h1" size="xl" textAlign="center">
         Blackjack
       </Heading>
+      <Text fontSize="xl" fontWeight="bold">
+        Your Score: {playerScore}
+      </Text>
+      <Text fontSize="xl" fontWeight="bold">
+        Your Score: {playerScore}
+      </Text>
       <HStack justifyContent="center" spacing={4}>
         <Flex alignItems="center">
           <FaUser size="2x" />
@@ -264,7 +270,6 @@ const Index = () => {
         </HStack>
         <HStack>
           <Text fontSize="xl">Your Bet: {currentBet}</Text>
-          <Text fontSize="xl">Your Score: {playerScore}</Text>
         </HStack>
       </VStack>
       {isBlackjack(playerHand) && !isGameOver && (
