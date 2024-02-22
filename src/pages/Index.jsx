@@ -158,12 +158,22 @@ const Index = () => {
     const dealerTotal = getTotal(finalDealerHand);
     let winner = null;
 
-    if (playerTotal > 21 || (dealerTotal <= 21 && dealerTotal > playerTotal)) {
-      setDealerScore((prevScore) => prevScore + currentBet);
+    if (playerTotal > 21) {
+      // Player busted, dealer wins
+      setDealerScore(dealerScore + currentBet);
       winner = "dealer";
-    } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
-      setPlayerScore((prevScore) => prevScore + currentBet * 2);
+    } else if (dealerTotal > 21) {
+      // Dealer busted, player wins
+      setPlayerScore(playerScore + currentBet * 2);
       winner = "player";
+    } else if (playerTotal > dealerTotal) {
+      // Player has higher score, player wins
+      setPlayerScore(playerScore + currentBet * 2);
+      winner = "player";
+    } else if (dealerTotal > playerTotal) {
+      // Dealer has higher score, dealer wins
+      setDealerScore(dealerScore + currentBet);
+      winner = "dealer";
     }
 
     if (winner) {
