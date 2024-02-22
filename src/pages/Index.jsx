@@ -204,7 +204,7 @@ const Index = () => {
         Blackjack
       </Heading>
       <Text fontSize="xl" fontWeight="bold" mb={4}>
-        Your Score: {playerScore}
+        Your Score: ${playerScore}
       </Text>
       <VStack spacing={4} mb={4}>
         <HStack>
