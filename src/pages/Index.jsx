@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Flex, Heading, Text, VStack, HStack, useToast, Image } from "@chakra-ui/react";
-import { FaUser, FaRobot, FaPlay, FaRedo } from "react-icons/fa";
+import { FaUser, FaRobot, FaPlay, FaPause } from "react-icons/fa";
 
 // Helper functions to simulate a deck of cards and the game logic
 const suits = ["♠", "♣", "♥", "♦"];
@@ -265,7 +265,7 @@ const Index = () => {
         <Button leftIcon={<FaPlay />} colorScheme="green" onClick={handleHit} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
           Hit
         </Button>
-        <Button leftIcon={<FaRedo />} colorScheme="orange" onClick={handleStand} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
+        <Button leftIcon={<FaPause />} colorScheme="orange" onClick={handleStand} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
           Stand
         </Button>
         {/* Removed Restart button */}
