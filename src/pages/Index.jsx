@@ -234,33 +234,35 @@ const Index = () => {
           </Text>
         </Flex>
       </HStack>
-      <HStack justifyContent="center" spacing={4}>
-        <VStack>
-          <HStack>
-            {playerHand.map((card, index) => (
-              <Card key={index} card={card} />
-            ))}
-          </HStack>
-          <Text fontSize="xl">Total: {getTotal(playerHand)}</Text>
-        </VStack>
-        <VStack>
-          <HStack>
-            {dealerHand.map((card, index) => {
-              if (isPlayerTurn && index === 1) {
-                return (
-                  <Box key={index} border="1px" borderColor="gray.200" borderRadius="md" w="60px" h="90px" display="flex" alignItems="center" justifyContent="center" bg="gray.300" boxShadow="md" mr="2">
-                    <Text fontSize="xl">?</Text>
-                  </Box>
-                );
-              }
-              return <Card key={index} card={card} />;
-            })}
-          </HStack>
-          {!isGameOver && !isPlayerTurn && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
-          {!isGameOver && isPlayerTurn && <Text fontSize="xl">Total: ??</Text>}
-          {isGameOver && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
-        </VStack>
-      </HStack>
+      {currentBet > 0 && (
+        <HStack justifyContent="center" spacing={4}>
+          <VStack>
+            <HStack>
+              {playerHand.map((card, index) => (
+                <Card key={index} card={card} />
+              ))}
+            </HStack>
+            <Text fontSize="xl">Total: {getTotal(playerHand)}</Text>
+          </VStack>
+          <VStack>
+            <HStack>
+              {dealerHand.map((card, index) => {
+                if (isPlayerTurn && index === 1) {
+                  return (
+                    <Box key={index} border="1px" borderColor="gray.200" borderRadius="md" w="60px" h="90px" display="flex" alignItems="center" justifyContent="center" bg="gray.300" boxShadow="md" mr="2">
+                      <Text fontSize="xl">?</Text>
+                    </Box>
+                  );
+                }
+                return <Card key={index} card={card} />;
+              })}
+            </HStack>
+            {!isGameOver && !isPlayerTurn && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
+            {!isGameOver && isPlayerTurn && <Text fontSize="xl">Total: ??</Text>}
+            {isGameOver && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
+          </VStack>
+        </HStack>
+      )}
       <HStack spacing={4}>
         <Button leftIcon={<FaCaretUp size="1.5em" />} colorScheme="green" onClick={handleHit} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
           Hit
