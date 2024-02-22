@@ -219,7 +219,7 @@ const Index = () => {
           </Button>
         </HStack>
         <HStack>
-          <Text fontSize="xl">Your Bet: {currentBet}</Text>
+          <Text fontSize="xl">Your Bet: ${currentBet}</Text>
         </HStack>
       </VStack>
       <HStack justifyContent="center" spacing={4} mb={4}>
