@@ -147,9 +147,13 @@ const Index = () => {
   };
 
   // Restart the game and reset the bet
-  const handleRestart = () => {
-    setCurrentBet(0);
-    initialDeal();
+  const handleNextHand = () => {
+    if (isGameOver) {
+      // Update the scores based on the previous bet
+      determineWinner(dealerHand); // The determineWinner function updates the scores
+      setCurrentBet(0); // Reset the bet
+      initialDeal(); // Start the next hand
+    }
   };
 
   // Update determineWinner to handle score changes
@@ -239,11 +243,14 @@ const Index = () => {
         <Button leftIcon={<FaRedo />} colorScheme="orange" onClick={handleStand} isDisabled={!isPlayerTurn || isGameOver}>
           Stand
         </Button>
-        <Button leftIcon={<FaRedo />} colorScheme="blue" onClick={handleRestart}>
+        <Button leftIcon={<FaRedo />} colorScheme="blue" onClick={handleNextHand} isDisabled={!isGameOver}>
           Restart
         </Button>
       </HStack>
-      <VStack>
+      <VStack spacing={4}>
+        <Button colorScheme="teal" onClick={handleNextHand} isDisabled={!isGameOver}>
+          Next Hand
+        </Button>
         <HStack>
           <Button onClick={() => handleBet(10)} isDisabled={currentBet > 0 || isGameOver}>
             Bet 10
