@@ -245,11 +245,19 @@ const Index = () => {
         </VStack>
         <VStack>
           <HStack>
-            {dealerHand.map((card, index) => (
-              <Card key={index} card={card} />
-            ))}
+            {dealerHand.map((card, index) => {
+              if (isPlayerTurn && index === 1) {
+                return (
+                  <Box key={index} border="1px" borderColor="gray.200" borderRadius="md" w="60px" h="90px" display="flex" alignItems="center" justifyContent="center" bg="gray.300" boxShadow="md" mr="2">
+                    <Text fontSize="xl">?</Text>
+                  </Box>
+                );
+              }
+              return <Card key={index} card={card} />;
+            })}
           </HStack>
-          {!isGameOver && <Text fontSize="xl">Total: {getTotal(dealerHand.slice(0, 1))}</Text>}
+          {!isGameOver && !isPlayerTurn && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
+          {!isGameOver && isPlayerTurn && <Text fontSize="xl">Total: ??</Text>}
           {isGameOver && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
         </VStack>
       </HStack>
