@@ -146,11 +146,9 @@ const Index = () => {
     }
   };
 
-  // Restart the game and reset the bet
+  // Restart the game and reset the bet without updating the scores again
   const handleNextHand = () => {
     if (isGameOver) {
-      // Update the scores based on the previous bet
-      determineWinner(dealerHand); // The determineWinner function updates the scores
       setCurrentBet(0); // Reset the bet
       initialDeal(); // Start the next hand
     }
