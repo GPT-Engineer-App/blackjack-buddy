@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Flex, Heading, Text, VStack, HStack, useToast, Divider } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text, VStack, HStack, useToast, Image } from "@chakra-ui/react";
 import { FaUser, FaRobot, FaPlay, FaPause, FaCaretUp } from "react-icons/fa";
 
 // Helper functions to simulate a deck of cards and the game logic
@@ -234,13 +234,7 @@ const Index = () => {
           </Text>
         </Flex>
       </HStack>
-      <HStack justifyContent="center" spacing={4} px={12}>
-        <VStack>
-          {playerHand.map((card, index) => (
-            <Card key={index} card={card} />
-          ))}
-        </VStack>
-        <Divider orientation="vertical" />
+      <HStack justifyContent="center" spacing={4}>
         <VStack>
           <HStack>
             {playerHand.map((card, index) => (
