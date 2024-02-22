@@ -237,10 +237,10 @@ const Index = () => {
         </VStack>
       </HStack>
       <HStack spacing={4}>
-        <Button leftIcon={<FaPlay />} colorScheme="green" onClick={handleHit} isDisabled={!isPlayerTurn || isGameOver}>
+        <Button leftIcon={<FaPlay />} colorScheme="green" onClick={handleHit} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
           Hit
         </Button>
-        <Button leftIcon={<FaRedo />} colorScheme="orange" onClick={handleStand} isDisabled={!isPlayerTurn || isGameOver}>
+        <Button leftIcon={<FaRedo />} colorScheme="orange" onClick={handleStand} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
           Stand
         </Button>
         <Button leftIcon={<FaRedo />} colorScheme="blue" onClick={handleNextHand} isDisabled={!isGameOver}>
@@ -248,7 +248,7 @@ const Index = () => {
         </Button>
       </HStack>
       <VStack spacing={4}>
-        <Button colorScheme="teal" onClick={handleNextHand} isDisabled={!isGameOver}>
+        <Button colorScheme="teal" onClick={handleNextHand} isDisabled={!isGameOver || currentBet === 0}>
           Next Hand
         </Button>
         <HStack>
