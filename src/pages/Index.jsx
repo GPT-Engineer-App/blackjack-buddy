@@ -70,6 +70,9 @@ const Index = () => {
   const [deck, setDeck] = useState(createDeck());
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
+  const [playerScore, setPlayerScore] = useState(1000); // Player starts with 1000 score/money
+  const [dealerScore, setDealerScore] = useState(1000);
+  const [currentBet, setCurrentBet] = useState(0);
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
   const [isGameOver, setIsGameOver] = useState(false);
   const toast = useToast();
@@ -117,34 +120,8 @@ const Index = () => {
     determineWinner(newDealerHand);
   };
 
-  // Determine the winner of the game
-  const determineWinner = (finalDealerHand) => {
-    const playerTotal = getTotal(playerHand);
-    const dealerTotal = getTotal(finalDealerHand);
-
-    if (playerTotal > 21 || (dealerTotal <= 21 && dealerTotal > playerTotal)) {
-      toast({
-        title: "Dealer wins!",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
-    } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
-      toast({
-        title: "Player wins!",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-    } else if (playerTotal === dealerTotal) {
-      toast({
-        title: "Push!",
-        status: "warning",
-        duration: 2000,
-        isClosable: true,
-      });
-    }
-  };
+  // Update determineWinner to handle score changes
+  // Remove the previous determineWinner declaration
 
   // Player stands and ends their turn
   const handleStand = () => {
@@ -154,9 +131,57 @@ const Index = () => {
     }, 1000);
   };
 
-  // Restart the game
+  const handleBet = (betAmount) => {
+    if (betAmount > playerScore) {
+      toast({
+        title: "Insufficient funds!",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    } else {
+      setCurrentBet(betAmount);
+      setPlayerScore((prevScore) => prevScore - betAmount);
+      initialDeal();
+    }
+  };
+
+  // Restart the game and reset the bet
   const handleRestart = () => {
+    setCurrentBet(0);
     initialDeal();
+  };
+
+  // Update determineWinner to handle score changes
+  const determineWinner = (finalDealerHand) => {
+    const playerTotal = getTotal(playerHand);
+    const dealerTotal = getTotal(finalDealerHand);
+    let winner = null;
+
+    if (playerTotal > 21 || (dealerTotal <= 21 && dealerTotal > playerTotal)) {
+      setDealerScore((prevScore) => prevScore + currentBet);
+      winner = "dealer";
+    } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
+      setPlayerScore((prevScore) => prevScore + currentBet * 2);
+      winner = "player";
+    }
+
+    if (winner) {
+      toast({
+        title: `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins!`,
+        status: winner === "player" ? "success" : "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    } else {
+      setPlayerScore((prevScore) => prevScore + currentBet);
+      toast({
+        title: "Push!",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -208,9 +233,27 @@ const Index = () => {
           Restart
         </Button>
       </HStack>
-      {isBlackjack(playerHand) && (
+      <VStack>
+        <HStack>
+          <Button onClick={() => handleBet(10)} isDisabled={currentBet > 0 || isGameOver}>
+            Bet 10
+          </Button>
+          <Button onClick={() => handleBet(50)} isDisabled={currentBet > 0 || isGameOver}>
+            Bet 50
+          </Button>
+          <Button onClick={() => handleBet(100)} isDisabled={currentBet > 0 || isGameOver}>
+            Bet 100
+          </Button>
+        </HStack>
+        <HStack>
+          <Text fontSize="xl">Your Bet: {currentBet}</Text>
+          <Text fontSize="xl">Your Score: {playerScore}</Text>
+          <Text fontSize="xl">Dealer Score: {dealerScore}</Text>
+        </HStack>
+      </VStack>
+      {isBlackjack(playerHand) && !isGameOver && (
         <Text fontSize="2xl" color="green.500">
-          Blackjack!
+          Blackjack! You win double your bet!
         </Text>
       )}
     </VStack>
