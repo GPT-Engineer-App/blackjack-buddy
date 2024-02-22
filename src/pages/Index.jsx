@@ -206,9 +206,6 @@ const Index = () => {
       <Text fontSize="xl" fontWeight="bold">
         Your Score: {playerScore}
       </Text>
-      <Text fontSize="xl" fontWeight="bold">
-        Your Score: {playerScore}
-      </Text>
       <HStack justifyContent="center" spacing={4}>
         <Flex alignItems="center">
           <FaUser size="2x" />
