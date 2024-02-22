@@ -209,13 +209,13 @@ const Index = () => {
       <VStack spacing={4} mb={4}>
         <HStack>
           <Button onClick={() => handleBet(10)} isDisabled={currentBet > 0 || isGameOver}>
-            Bet 10
+            Bet $10
           </Button>
           <Button onClick={() => handleBet(50)} isDisabled={currentBet > 0 || isGameOver}>
-            Bet 50
+            Bet $50
           </Button>
           <Button onClick={() => handleBet(100)} isDisabled={currentBet > 0 || isGameOver}>
-            Bet 100
+            Bet $100
           </Button>
         </HStack>
         <HStack>
