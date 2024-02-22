@@ -265,7 +265,6 @@ const Index = () => {
         <HStack>
           <Text fontSize="xl">Your Bet: {currentBet}</Text>
           <Text fontSize="xl">Your Score: {playerScore}</Text>
-          <Text fontSize="xl">Dealer Score: {dealerScore}</Text>
         </HStack>
       </VStack>
       {isBlackjack(playerHand) && !isGameOver && (
