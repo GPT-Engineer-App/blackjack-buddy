@@ -203,10 +203,26 @@ const Index = () => {
       <Heading as="h1" size="xl" textAlign="center">
         Blackjack
       </Heading>
-      <Text fontSize="xl" fontWeight="bold">
+      <Text fontSize="xl" fontWeight="bold" mb={4}>
         Your Score: {playerScore}
       </Text>
-      <HStack justifyContent="center" spacing={4}>
+      <VStack spacing={4} mb={4}>
+        <HStack>
+          <Button onClick={() => handleBet(10)} isDisabled={currentBet > 0 || isGameOver}>
+            Bet 10
+          </Button>
+          <Button onClick={() => handleBet(50)} isDisabled={currentBet > 0 || isGameOver}>
+            Bet 50
+          </Button>
+          <Button onClick={() => handleBet(100)} isDisabled={currentBet > 0 || isGameOver}>
+            Bet 100
+          </Button>
+        </HStack>
+        <HStack>
+          <Text fontSize="xl">Your Bet: {currentBet}</Text>
+        </HStack>
+      </VStack>
+      <HStack justifyContent="center" spacing={4} mb={4}>
         <Flex alignItems="center">
           <FaUser size="2x" />
           <Text fontSize="xl" ml={2}>
@@ -250,25 +266,7 @@ const Index = () => {
           Restart
         </Button>
       </HStack>
-      <VStack spacing={4}>
-        <Button colorScheme="teal" onClick={handleNextHand} isDisabled={!isGameOver || currentBet === 0}>
-          Next Hand
-        </Button>
-        <HStack>
-          <Button onClick={() => handleBet(10)} isDisabled={currentBet > 0 || isGameOver}>
-            Bet 10
-          </Button>
-          <Button onClick={() => handleBet(50)} isDisabled={currentBet > 0 || isGameOver}>
-            Bet 50
-          </Button>
-          <Button onClick={() => handleBet(100)} isDisabled={currentBet > 0 || isGameOver}>
-            Bet 100
-          </Button>
-        </HStack>
-        <HStack>
-          <Text fontSize="xl">Your Bet: {currentBet}</Text>
-        </HStack>
-      </VStack>
+
       {isBlackjack(playerHand) && !isGameOver && (
         <Text fontSize="2xl" color="green.500">
           Blackjack! You win double your bet!
