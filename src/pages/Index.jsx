@@ -232,8 +232,14 @@ const Index = () => {
               <Card key={index} card={card} />
             ))}
           </HStack>
-          {!isGameOver && <Text fontSize="xl">Total: {getTotal(dealerHand.slice(0, 1))}</Text>}
-          {isGameOver && <Text fontSize="xl">Total: {getTotal(dealerHand)}</Text>}
+          {isPlayerTurn && (
+            <>
+              <Card card={dealerHand[0]} />
+              <Box border="1px" borderColor="gray.200" borderRadius="md" w="60px" h="90px" bg="gray.300" boxShadow="md" mr="2" />
+            </>
+          )}
+          {!isPlayerTurn && dealerHand.map((card, index) => <Card key={index} card={card} />)}
+          <Text fontSize="xl">Total: {!isPlayerTurn ? getTotal(dealerHand) : getTotal(dealerHand.slice(0, 1))}</Text>
         </VStack>
       </HStack>
       <HStack spacing={4}>
