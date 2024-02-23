@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Flex, Heading, Text, VStack, HStack, useToast, Image } from "@chakra-ui/react";
-import { FaUser, FaRobot, FaPlay, FaPause, FaCaretUp } from "react-icons/fa";
+import { FaUser, FaRobot, FaPlay, FaPause, FaCaretUp, FaAngleDoubleUp } from "react-icons/fa";
 
 // Helper functions to simulate a deck of cards and the game logic
 const suits = ["♠", "♣", "♥", "♦"];
@@ -131,19 +131,33 @@ const Index = () => {
     }, 1000);
   };
 
+  const handleDouble = () => {
+    if (!isPlayerTurn || playerHand.length !== 2) return;
+    const newDeck = [...deck];
+    const newPlayerHand = [...playerHand, newDeck.pop()];
+    setPlayerHand(newPlayerHand);
+    setDeck(newDeck);
+    setCurrentBet(currentBet * 2);
+    setPlayerScore((prevScore) => prevScore - currentBet);
+    setIsPlayerTurn(false);
+    setTimeout(() => {
+      handleDealerTurn();
+    }, 1000);
+  };
+
   const handleBet = (betAmount) => {
-    if (betAmount > playerScore) {
+    if (betAmount > playerScore || currentBet > 0) {
       toast({
-        title: "Insufficient funds!",
+        title: "Cannot place bet now!",
         status: "error",
         duration: 2000,
         isClosable: true,
       });
-    } else {
-      setCurrentBet(betAmount);
-      setPlayerScore((prevScore) => prevScore - betAmount);
-      initialDeal();
+      return;
     }
+    setCurrentBet(betAmount);
+    setPlayerScore((prevScore) => prevScore - betAmount);
+    initialDeal();
   };
 
   // Restart the game and reset the bet without updating the scores again
@@ -263,14 +277,19 @@ const Index = () => {
           </VStack>
         </HStack>
       )}
-      <HStack spacing={4}>
-        <Button leftIcon={<FaCaretUp size="1.5em" />} colorScheme="green" onClick={handleHit} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
+      <HStack spacing={4} justifyContent="center">
+        <Button leftIcon={<FaCaretUp size="1.5em" />} colorScheme="green" onClick={handleHit} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0 || playerHand.length > 2}>
           Hit
         </Button>
         <Button leftIcon={<FaPause size="1.5em" />} colorScheme="orange" onClick={handleStand} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0}>
           Stand
         </Button>
-        {/* Removed Restart button */}
+        <Button leftIcon={<FaPlay size="1.5em" />} colorScheme="blue" onClick={handleNextHand} isDisabled={!isGameOver}>
+          Next Hand
+        </Button>
+        <Button leftIcon={<FaAngleDoubleUp size="1.5em" />} colorScheme="purple" onClick={handleDouble} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0 || playerHand.length > 2}>
+          Double
+        </Button>
         <Button leftIcon={<FaPlay size="1.5em" />} colorScheme="blue" onClick={handleNextHand} isDisabled={!isGameOver}>
           Next Hand
         </Button>
