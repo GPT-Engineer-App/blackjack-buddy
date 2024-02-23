@@ -287,6 +287,9 @@ const Index = () => {
         <Button leftIcon={<FaAngleDoubleUp size="1.5em" />} colorScheme="purple" onClick={handleDouble} isDisabled={!isPlayerTurn || isGameOver || currentBet === 0 || playerHand.length > 2}>
           Double
         </Button>
+        <Button leftIcon={<FaPlay size="1.5em" />} colorScheme="teal" onClick={handleNextHand} isDisabled={!isGameOver}>
+          Next Hand
+        </Button>
       </HStack>
 
       {isBlackjack(playerHand) && !isGameOver && (
