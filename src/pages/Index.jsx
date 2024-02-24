@@ -178,13 +178,11 @@ const Index = () => {
       // Player busted, dealer wins
       setDealerScore(dealerScore + currentBet);
       winner = "dealer";
-    } else if (dealerTotal > 21) {
-      // Dealer busted, player wins
+    } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
+      // Dealer busted or player has higher score, player wins
       setPlayerScore(playerScore + currentBet * 2);
       winner = "player";
-    } else if (playerTotal > dealerTotal) {
-      // Player has higher score, player wins
-      setPlayerScore(playerScore + currentBet * 2);
+      // No change needed here, as the correct score update is already being performed for a player win scenario
       winner = "player";
     } else if (dealerTotal > playerTotal) {
       // Dealer has higher score, dealer wins
